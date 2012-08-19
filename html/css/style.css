@@ -1,0 +1,59 @@
+body { 
+	background: #e8ebec; 
+	font-family: Arial, Helvetica, sans-serif;
+	color : #ccc; 
+	margin:0;
+	padding:0;
+}
+img {
+	border:0;
+}
+#wrapper{
+	width:960px;
+	margin: 0px auto;
+	padding:0;
+}
+#logo {
+	width:830px;
+	/*height:164px;*/
+	text-align: center;
+	display:block;
+	margin:0px auto;
+	font-size: 75pt;
+	text-shadow: 0px 2px 2px #4d4d4d;
+    color: #303030;
+}
+
+#main {
+	background: url(/html/img/main.jpg) no-repeat center;
+	width: 847px;
+	height: 395px;
+	overflow:hidden;
+	margin: 0px auto;
+}
+
+#credits {
+	width:770px;
+	height:120px;
+	margin:150px 0 0 45px;
+}
+
+#bottom {
+	width:739px;
+	height:40px;
+	margin:67px 0 0 50px;
+}
+
+.bottom-text{
+	float:left;
+	height:27px;
+	color:#fff;
+	font-size:11px;
+	padding: 13px 0 0 20px;
+}
+
+#value {
+	font-size: 55pt;
+	text-align: center;
+	color: green;
+}

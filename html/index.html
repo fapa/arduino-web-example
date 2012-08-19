@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> Bike Monitor </title> 
+	<link rel="stylesheet" href="/html/css/style.css">
+	<script src="/html/js/jquery.js"></script> 
+</head>
+
+<body>
+
+		<div id="wrapper">
+		<div id="logo">Bike Monitor</div>
+		<div id="main">
+			<div id="credits">
+					<div id='value'></div>
+			</div>
+			
+			<div id="bottom">
+				<div class="bottom-text">
+				by Fabian Pammer and Janko Hofmann
+				</div>
+		</div> <!-- end of main -->
+
+	<script type = "text/javascript">
+	var allVals = [];
+	function getArduinoValue(){	
+		$.getJSON('/arduino/', function(data){
+			if(data.credits >=0) {
+				$('#value').html(data.credits);			
+			} else {
+				$('#value').html('Reading Credits...');			
+			}
+		});
+		//	$('<div>', {'id' : 'val', html : a.responseText}).appendTo('#value');
+		t = setTimeout("getArduinoValue()",500); //delay in  milliseconds
+	}	
+
+	getArduinoValue();
+
+	</script>
+
+</body>
+</html> 
