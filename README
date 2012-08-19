@@ -1,0 +1,107 @@
+Good looking Web interfaces for Arduino with Python
+
+Designing a GUI for a project is always problematic. There are hundreds of different toolkits to create GUIs but learning them takes a lot of time. 
+A very simple way to quickly create a nice looking interface to your Arduino project is pybottle. Pybottle is a micro web-framework that simplifies
+creating a small website. Combined with pyserial to read Arduino output from the COM port this is a good way to prototype your GUI.
+
+[code]
+
+import bottle
+from bottle import static_file
+
+@bottle.route('/')
+def index():
+	return open('./html/index.html','r')
+
+bottle.run()
+
+[/code]
+
+This small peace of code already serves you the index.html file. The standard pybottle server starts on port 8080 so this page is accessible on http://localhost:8080/.
+
+If your site contains images and other resources you should define a static_filepath:
+
+[code]
+
+@bottle.route('/html/<filepath:path>')
+def static(filepath):
+	return static_file(filepath, root='./html/')
+
+[/code]
+
+@bottle.route also allows you to directly return JSON like objects by adding key, value pairs to a dictionary.
+
+[code]
+
+@bottle.route('/arduino/')
+def getArduino():
+	dic = {}
+	dic['sensor1'] = sensor1
+	return dic
+
+[/code]
+
+Now for the tricky bit. The Pybottle server is running in an endless loop this means that if we want to continuously read the sensor values from an Arduino we need
+a separate thread.
+
+First we need additional modules:
+
+[code]
+
+import sys, threading, time, os, signal, operator
+
+[/code]
+
+And a little helper class:
+
+[code]
+
+class MyThread(threading.Thread):
+	def __init__(self, target, *args):
+		threading.Thread.__init__(self, target=target, args=args)
+		self.start()
+
+[/code]
+
+In this thread we have another endless loop that reads from the COM port and updates the sensor values.
+
+[code]
+
+def arduino_serial_connection():
+	global credits
+
+	while running:
+		try:
+			serial_connection = serial.Serial(mySerialPort,9600)
+			line = serial_connection.readline()
+			print line
+		except SerialException, e:
+			print e
+
+		time.sleep(1)
+
+[/code]
+
+To update the value on the HTML page we can use a simple jquery javascript.
+
+[code]
+
+	<script type = "text/javascript">
+	var allVals = [];
+	function getArduinoValue(){	
+		$.getJSON('/arduino/', function(data){
+			if(data.credits >=0) {
+				$('#value').html(data.sensor1);			
+			} 
+		});
+	}	
+
+	setIntervall("getArduinoValue()",500);
+
+	</script>
+
+[/code]
+
+Just add your favorite HTML-Template a little bit CSS magic and presto you have a nice looking web interface for your Arduino.
+
+A complete example can be found [link]here[/link].
