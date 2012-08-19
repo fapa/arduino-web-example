@@ -103,5 +103,3 @@ To update the value on the HTML page we can use a simple jquery javascript.
 [/code]
 
 Just add your favorite HTML-Template a little bit CSS magic and presto you have a nice looking web interface for your Arduino.
-
-A complete example can be found [link]here[/link].
